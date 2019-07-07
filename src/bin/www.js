@@ -12,7 +12,7 @@ const debug = debugLib('bazer-app:server');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8080');
+var port = normalizePort(process.env.PORT || '8081');
 app.set('port', port);
 
 /**
@@ -28,7 +28,7 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-console.log("server listening on 8080")
+console.log("server listening on 8081")
 /**
  * Normalize a port into a number, string, or false.
  */

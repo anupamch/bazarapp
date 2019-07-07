@@ -1,5 +1,6 @@
 import Controller from './Controller'
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 export default class UserController extends Controller{
 
     getUser(req,res){
@@ -14,12 +15,13 @@ export default class UserController extends Controller{
         let shasum = crypto.createHash('sha1');
         shasum.update(req.body.password);
         let password = shasum.digest('hex');
-        let username = req.body.name;
+        let username = req.body.username;
+        
         super.db().UserAuth.find({'username':username,'password':password})
                            .populate('user')
                            .exec(function (err, docs) {
                            
-                            if(err) throw err
+                            if(err) throw err32
                             
                             //console.log(docs)
                             if(docs.length>0){
@@ -29,7 +31,7 @@ export default class UserController extends Controller{
                                     res.send({user:docs[0].user,token:token,auth:"1"});
                                 }
                                 else{
-                                    res.send({auth:"0"});
+                                    res.send({auth:"0",status:200});
                                 }
                    });
     }

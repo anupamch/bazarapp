@@ -6,6 +6,13 @@
 var models = [
      'user',
      'user_auth',
+     'product',
+     'product_category',
+     'order',
+     'order_details',
+     'offer',
+     'category'
+
      
 ];
 

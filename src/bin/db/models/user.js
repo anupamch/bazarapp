@@ -1,11 +1,16 @@
 "use strict";
-
 module.exports=function(mongoose){
 var userSchema = mongoose.Schema({
         firstName: String,
         lastName: String,
-        address:{type:String,default:null},
-        phone:{type:String,default:null},
+        address:String,
+        landmark:String,
+        pincode:String,
+        city:{type:String,default:null},
+        state:{type:String,default:'WB'},
+        country:{type:String,default:'IN'},
+        phone:String,
+        email:{type:String,default:null},
         created: { 
             type: Date,
             default: Date.now
