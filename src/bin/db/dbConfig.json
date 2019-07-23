@@ -1,0 +1,22 @@
+
+{
+      "development": {
+        "driver": "mysql",
+        "user": "root",
+        "password":"",
+		"port":3306,
+        "database": "netbazzar"
+    },
+
+    "test": {
+        "driver": "mysql",
+        "user": "root",
+        "database": "myapp_test"
+    },
+
+    "production": {
+        "driver": "mysql",
+        "user": "root",
+        "database": "myapp"
+    }
+}
