@@ -3,13 +3,13 @@
 module.exports =function(sequelize, DataTypes){
 
 
-   return sequelize.define('offer',{
+   return sequelize.define('Offer',{
         
        
         offer: DataTypes.STRING,
           
     }, {
-        timestamps: false,
+        timestamps: true,
         underscored: true
     });
     

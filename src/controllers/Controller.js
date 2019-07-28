@@ -1,6 +1,6 @@
-import connection from '../bin/db/connection';
+import connection from '../bin/db/models';
 export default class Controller{
-      db(){
+     get db(){
           return connection;
      }
 }

@@ -5,8 +5,8 @@ export default class UserController extends Controller{
 
     getUser(req,res){
       
-        super.db().User.find({},function(err,users){
-            res.send({users:users,response:200});
+        db.User.findAll().then(users=>{
+            res.send({users:users.dataValues,response:200});
        })
        
     }
@@ -17,18 +17,17 @@ export default class UserController extends Controller{
         let password = shasum.digest('hex');
         let username = req.body.username;
         
-        super.db().UserAuth.find({'username':username,'password':password})
-                           .populate('user')
-                           .exec(function (err, docs) {
+        super.db.UserAuth.findOne({where:{'username':username,'password':password},include:[{model:super.db.User}]})
                            
-                            if(err) throw err32
-                            
-                            //console.log(docs)
-                            if(docs.length>0){
-                                let token = jwt.sign({id:docs.user}, "78947bhfn%sdfsdfAw@#234", {
+                           .then(reponse=>{
+                           console.log(reponse)
+                           
+                           
+                            if(reponse){
+                                 let token = jwt.sign({id:reponse.dataValues.id}, "78947bhfn%sdfsdfAw@#234", {
                                     expiresIn: Math.floor(Date.now() / 1000)  // expires in 24 hour
                                 });
-                                    res.send({user:docs[0].user,token:token,auth:"1"});
+                                    res.send({user:reponse.user.dataValues,token:token,auth:"1"}); 
                                 }
                                 else{
                                     res.send({auth:"0",status:200});

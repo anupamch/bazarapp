@@ -5,28 +5,27 @@ var DataTypes = require("sequelize");
 
 // load models
 var models = [
-     'user',
-     'user_auth',
-     'product',
-     'product_category',
-     'order',
-     'order_details',
-     'offer'
+     'User',
+     'UserAuth',
+     'Product',
+     'ProductCategory',
+     'Order',
+     'OrderDetails',
+     'Offer'
    
 ];
 
 
 models.forEach(function(model) {
-
-    module.exports[model]= require("./"+model);
+    module.exports[model]=  db.import("./"+model);
 });
 
 (function(m) {
-  console.log(m)  
-  m.user_auth.belongsTo(m.user,{foreignKey:'user_id'})
-  m.product.belongsTo(m.product_category,{foreignKey:'category_id'})
-  m.order_details.belongsTo(m.product,{foreignKey:'product_id'})
-  m.order_details.belongsTo(m.order,{foreignKey:'order_id'})
+  
+  m.UserAuth.belongsTo(m.User,{foreignKey:'user_id'})
+  m.Product.belongsTo(m.ProductCategory,{foreignKey:'category_id'})
+  m.OrderDetails.belongsTo(m.Product,{foreignKey:'product_id'})
+  m.OrderDetails.belongsTo(m.Order,{foreignKey:'order_id'})
     
 })(module.exports);
 

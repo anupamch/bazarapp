@@ -5,20 +5,22 @@ module.exports=function(sequelize, DataTypes){
             autoIncrement: true,
             primaryKey: true
         },
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
-        address:DataTypes.STRING,
-        landmark:DataTypes.STRING,
-        pincode:DataTypes.STRING,
-        city:{type:DataTypes.STRING,default:null},
-        state:{type:DataTypes.STRING,default:'WB'},
-        country:{type:DataTypes.STRING,default:'IN'},
+        first_name: {type:DataTypes.STRING,allowNull: false},
+        last_name: {type:DataTypes.STRING,allowNull: false},
+        address:{type:DataTypes.STRING,allowNull: false},
+        landmark:{type:DataTypes.STRING,allowNull: false},
+        pincode:{type:DataTypes.STRING,allowNull: false},
+        city:{type:DataTypes.STRING},
+        state:{type:DataTypes.STRING,defaultValue:'WB'},
+        country:{type:DataTypes.STRING,defaultValue:'IN'},
         phone:DataTypes.STRING,
-        email:{type:DataTypes.STRING,default:null},
-        
+        email:{type:DataTypes.STRING},
+        user_status_id:{type:DataTypes.INTEGER,defaultValue:1},
+        user_type_id:{type:DataTypes.INTEGER}
     }, {
-        timestamps: false,
+        timestamps: true,
         underscored: true
+
     });
 
 }

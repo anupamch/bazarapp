@@ -1,22 +1,22 @@
 "use strict";
 module.exports=function(sequelize, DataTypes){
-    return sequelize.define('orderDetails',{
+    return sequelize.define('OrderDetails',{
         id: { type: DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true
         },
-        service_cost:{type:DataTypes.DOUBLE,default:0},
-        discount:{type:DataTypes.DOUBLE,default:0},
+        service_cost:{type:DataTypes.DOUBLE,defaultValue:0},
+        discount:{type:DataTypes.DOUBLE,defaultValue:0},
         unit_price:DataTypes.DOUBLE,
         total_price:DataTypes.DOUBLE,
         item_count:DataTypes.INTEGER,
         product_unit:DataTypes.STRING,
-        delivery_status:{type:DataTypes.DOUBLE,default:0},
+        delivery_status:{type:DataTypes.DOUBLE,defaultValue:0},
         product_id:DataTypes.INTEGER.UNSIGNED,
         order_id:DataTypes.INTEGER.UNSIGNED,                  
         
     }, {
-        timestamps: false,
+        timestamps: true,
         underscored: true
     });
 

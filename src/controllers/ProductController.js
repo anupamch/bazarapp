@@ -3,6 +3,7 @@ import Controller from './Controller'
 import Resize from './Resize'
 import path from 'path'
 var fs = require('fs');
+import Sequelize from 'Sequelize'
 import sharp from 'sharp'
 class ProductController extends Controller{
    
@@ -14,13 +15,16 @@ class ProductController extends Controller{
     
     
    getProduct(req,res){
-    
-      super.db().Product
-                 .find({status:{$ne:2}})
-                 .populate('category')
-                 .exec(function(err, product){
-                                                console.log(product)    
-                                                res.send({products:product,status:200});
+      let Op=Sequelize.Op;
+      super.db.Product
+                 .findAll({
+                                where:{status:{[Op.ne]:2}},
+                                include:[{model:super.db.ProductCategory}]
+                          })
+                 
+                 .then((product)=>{
+                                               
+                                                res.json({products:product,status:200});
                                             });
    }
 
@@ -29,11 +33,11 @@ class ProductController extends Controller{
       
     var filename="";   
     
-    var ProductObj=super.db().Product;
+    var ProductObj=super.db.Product;
     
     
    //console.log(req.file)
-    var ProductObj=super.db().Product;
+    var ProductObj=super.db.Product;
     const imagePath = path.join(__dirname, '/public/uploads/pimages');
     //const fileUpload = new Resize(imagePath);
     if (!req.file) {
@@ -49,37 +53,38 @@ class ProductController extends Controller{
     input.image=filename
         
     let product=new ProductObj(input)
-    product.save((err,product)=>{
-    if(err){
-                if (err) console.error(err); 
-                res.send({status:500,err:err});
-            }
-            res.send({status:200,product:product});
+    product.save().then(product=>{
+   
+            res.json({status:200,product:product});
+    },(err)=>{
+        if (err) console.error(err); 
+        res.json({status:500,err:err});
     })
        
    }
    async skuCount(req,res){
+       let Op=Sequelize.Op
        let sku=req.query.sku
        let id=req.query.id
        let count=0
        if(typeof id !='undefined' && id!='')
-         count=await super.db().Product.find({sku:sku,_id:{$ne:id}}).count() 
+         count=await super.db.Product.count({where:{sku:sku,id:{[Op.ne]:id}}})
        else
-         count=await super.db().Product.find({sku:sku}).count()
-       res.send({status:200,count:count})
+         count=await super.db.Product.count({where:{sku:sku}})
+       res.json({status:200,count:count})
    }
 
    async getProductById(req,res){
        try{
             let id=req.params.id
             if(id=="" || typeof id === undefined){
-                res.send({status:500,msg:"Invalid product"})
+                res.json({status:500,msg:"Invalid product"})
             }
 
-            let product=await super.db().Product.find({_id:id})
-            res.send({status:200,product:product})
+            let product=await super.db.Product.findOne({where:{id:id}})
+            res.json({status:200,product:product.dataValues})
       }catch(err){
-            res.send({status:500,msg:err})
+            res.json({status:500,msg:err})
       }
    }
 
@@ -87,11 +92,11 @@ class ProductController extends Controller{
    
     var filename="";   
     
-    var ProductObj=super.db().Product;
+    var ProductObj=super.db.Product;
     let input=JSON.parse(req.body.fields)
     
    //console.log(req.file)
-    var ProductObj=super.db().Product;
+    var ProductObj=super.db.Product;
     
     var filename=""
     if (req.file && typeof req.file != 'undefined') {
@@ -111,16 +116,16 @@ class ProductController extends Controller{
     
     
     
-    let id=input._id;
+    let id=input.id;
     delete input.id;
     
         
-    let product=ProductObj.findOneAndUpdate({_id:id},input,(err,product)=>{
-        if(err){
-            console.error(err); 
-            res.send({status:500,err:err});
-        }
-        res.send({status:200,product:product});
+    let product=ProductObj.update(input,{where:{id:id}}).then(product=>{
+       
+        res.json({status:200,product:product});
+    },(err)=>{
+        console.error(err); 
+        res.json({status:500,err:err});
     })
     
        
@@ -129,13 +134,13 @@ class ProductController extends Controller{
     deleteProduct(req,res){
        
        let id=req.params.id
-       super.db().Product.findOneAndUpdate({_id:id},{status:2},(err,result)=>{
-        if(err){
-            console.error(err); 
-            res.send({status:500,err:err});
-        }
-        res.send({status:200,msg:"Deleted"});
-       })
+       super.db.Product.update({status:2},{where:{id:id}}).then(result=>{
+       
+        res.json({status:200,msg:"Deleted"});
+       },(err)=>{
+        console.error(err); 
+        res.json({status:500,err:err});
+    })
    }
 
 }

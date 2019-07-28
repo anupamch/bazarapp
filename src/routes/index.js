@@ -46,4 +46,7 @@ router.get('/delete-product/:id',productOp.deleteProduct)
 router.get('/get-product-category',categoryOp.getAllCategory)
 router.post('/create-category',categoryOp.createCategory)
 router.get('/count-category',categoryOp.categoryCount)
+router.get('/get-product-category-by-id/:id',categoryOp.getCategoryById);
+router.post('/edit-category',categoryOp.editCategory)
+router.get('/delete-category/:id',categoryOp.deleteCtegory)
 export default router;
