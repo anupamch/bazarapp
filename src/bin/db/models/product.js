@@ -13,6 +13,8 @@ module.exports=function(sequelize, DataTypes){
         unit:DataTypes.STRING,
         minimum_order:{type:DataTypes.DOUBLE,defaultValue:1},
         discount:{type:DataTypes.DOUBLE,defaultValue:0},
+        is_service:{type:DataTypes.BOOLEAN,defaultValue:0},
+        service_name:DataTypes.STRING,
         service_cost:{type:DataTypes.DOUBLE,defaultValue:0},
         status:{type:DataTypes.INTEGER,defaultValue:1},
         category_id:DataTypes.INTEGER.UNSIGNED,

@@ -51,7 +51,10 @@ class ProductController extends Controller{
       })
     let input=JSON.parse(req.body.fields)
     input.image=filename
-        
+    if(input.is_service==0){
+        input.service_name="";
+        input.service_cost=0
+    }    
     let product=new ProductObj(input)
     product.save().then(product=>{
    
@@ -118,7 +121,10 @@ class ProductController extends Controller{
     
     let id=input.id;
     delete input.id;
-    
+    if(input.is_service==0){
+        input.service_name="";
+        input.service_cost=0
+    }    
         
     let product=ProductObj.update(input,{where:{id:id}}).then(product=>{
        

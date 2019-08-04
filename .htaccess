@@ -1,0 +1,7 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/droidcor/netbazzar"
+PassengerBaseURI "/netbazzar"
+PassengerNodejs "/home/droidcor/nodevenv/netbazzar/10/bin/node"
+PassengerAppType node
+PassengerStartupFile app.js
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
