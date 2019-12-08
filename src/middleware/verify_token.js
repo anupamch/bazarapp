@@ -7,7 +7,7 @@ module.exports = function(req,res,next) {
     // verifies secret and checks exp
         jwt.verify(token, "78947bhfn%sdfsdfAw@#234", function(err, decoded) {
             if (err) { //failed verification.
-                return res.send({"auth": 0,status:200});
+                return res.send({"auth": token,status:200});
                          
                       
             }

@@ -1,5 +1,5 @@
 import Controller from './Controller'
-import Sequelize from 'Sequelize'
+import Sequelize from 'sequelize'
 export default class CategoryController extends Controller{
     
     getAllCategory(req,res){
@@ -47,7 +47,8 @@ export default class CategoryController extends Controller{
     deleteCtegory(req,res){
        
         let id=req.params.id
-        super.db.ProductCategory.update({status:2},{where:{id:id}}).then(result=>{
+        let rstring = Math.random().toString(36).substring(7);
+        super.db.ProductCategory.update({status:2,name:rstring},{where:{id:id}}).then(result=>{
          
          res.send({status:200,msg:"Deleted"});
         },(err)=>{

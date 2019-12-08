@@ -1,10 +1,10 @@
 import Controller from './Controller'
-
-import Resize from './Resize'
+//import '@babel/polyfill'
+import jimp from 'jimp';
 import path from 'path'
 var fs = require('fs');
-import Sequelize from 'Sequelize'
-import sharp from 'sharp'
+var Sequelize = require('sequelize');
+
 class ProductController extends Controller{
    
     constructor(){
@@ -28,6 +28,21 @@ class ProductController extends Controller{
                                             });
    }
 
+   getProductByCategory(req,res){
+    let Op=Sequelize.Op;
+    let cat_id = req.params.cat_id
+    super.db.Product
+               .findAll({
+                              where:{status:{[Op.ne]:2},category_id:cat_id},
+                              include:[{model:super.db.ProductCategory}]
+                        })
+               
+               .then((product)=>{
+                                             
+                                              res.json({products:product,status:200});
+                                          });
+   }
+
 
     async createProduct(req,res){
       
@@ -35,20 +50,22 @@ class ProductController extends Controller{
     
     var ProductObj=super.db.Product;
     
-    
-   //console.log(req.file)
-    var ProductObj=super.db.Product;
-    const imagePath = path.join(__dirname, '/public/uploads/pimages');
+    const imagePath = path.join(__dirname,'../../public/uploads/pimages');
     //const fileUpload = new Resize(imagePath);
     if (!req.file) {
         res.status(401).json({error: 'Please provide an image'});
       }
     var filename=Date.now() + '-' + req.file.originalname 
-    sharp(req.file.path).resize(200, 200).toFile(req.file.destination+"/"+filename,function(err, info) {
-        if (err) console.log(err)
-        fs.unlink(req.file.path,function(){})
-        
-      })
+   
+
+      //console.log(imagePath+"/"+filename)
+      jimp.read(req.file.path, function (err, lenna) {
+        if (err) throw err;
+        lenna.resize(200, 200)            // resize
+             .quality(60)                 // set JPEG quality
+             .write(imagePath+"/"+filename); // save
+             fs.unlink(req.file.path,function(){})
+    });
     let input=JSON.parse(req.body.fields)
     input.image=filename
     if(input.is_service==0){
@@ -103,18 +120,20 @@ class ProductController extends Controller{
     
     var filename=""
     if (req.file && typeof req.file != 'undefined') {
-        //const imagePath = path.join(__dirname, '/public/uploads/pimages');
+        const imagePath = path.join(__dirname,'../../public/uploads/pimages');
         const old_file_name=input.image
         filename=Date.now() + '-' + req.file.originalname
         input.image=filename 
-        
-        sharp(req.file.path).resize(200, 200).toFile(req.file.destination+"/"+filename,function(err, info) {
-            if (err) console.log(err)
-            fs.unlink(req.file.path,function(){})
-            fs.unlink(req.file.destination+"/"+old_file_name,function(){})
+       
 
-            
-        })
+        jimp.read(req.file.path, function (err, lenna) {
+            if (err) throw err;
+            lenna.resize(200, 200)            // resize
+                 .quality(60)                 // set JPEG quality
+                 .write(imagePath+"/"+filename); // save
+                 fs.unlink(req.file.path,function(){})
+                 fs.unlink(imagePath+"/"+old_file_name,function(){})
+        });
     }
     
     
@@ -125,7 +144,7 @@ class ProductController extends Controller{
         input.service_name="";
         input.service_cost=0
     }    
-        
+    //console.log(input)   
     let product=ProductObj.update(input,{where:{id:id}}).then(product=>{
        
         res.json({status:200,product:product});
@@ -149,6 +168,7 @@ class ProductController extends Controller{
     })
    }
 
+   
 }
 
 export default ProductController;

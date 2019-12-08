@@ -18,6 +18,7 @@ module.exports=function(sequelize, DataTypes){
         service_cost:{type:DataTypes.DOUBLE,defaultValue:0},
         status:{type:DataTypes.INTEGER,defaultValue:1},
         category_id:DataTypes.INTEGER.UNSIGNED,
+        dis_min_order:{type:DataTypes.STRING,allowNull:true}
         
     }, {
         timestamps: true,

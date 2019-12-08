@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run prod",
+    "start": "npm run dev",
     "server": "babel-node ./src/bin/www",
     "server:prod": "node ./dist/bin/www",
     "dev": "SET NODE_ENV=development && npm-run-all watch",
@@ -19,6 +19,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "get-stream": "^5.1.0",
+    "jimp": "^0.6.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.11",
     "morgan": "~1.9.1",
@@ -33,7 +34,8 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.4.5",
-    "nodemon": "^1.19.0"
+    "nodemon": "~1.19.0"
   }
 }

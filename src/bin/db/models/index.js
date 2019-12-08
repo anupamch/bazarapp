@@ -9,9 +9,12 @@ var models = [
      'UserAuth',
      'Product',
      'ProductCategory',
+     'DeliverySlot',
      'Order',
      'OrderDetails',
-     'Offer'
+     'Offer',
+     'AdminSetting',
+     
    
 ];
 
@@ -24,8 +27,11 @@ models.forEach(function(model) {
   
   m.UserAuth.belongsTo(m.User,{foreignKey:'user_id'})
   m.Product.belongsTo(m.ProductCategory,{foreignKey:'category_id'})
+  m.Order.belongsTo(m.User,{foreignKey:'user_id'})
+  m.Order.belongsTo(m.DeliverySlot,{foreignKey:'delivery_slot_id'})
   m.OrderDetails.belongsTo(m.Product,{foreignKey:'product_id'})
   m.OrderDetails.belongsTo(m.Order,{foreignKey:'order_id'})
+  m.OrderDetails.belongsTo(m.Product,{foreignKey:'product_id'})
     
 })(module.exports);
 

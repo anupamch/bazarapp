@@ -10,7 +10,12 @@ module.exports=function(sequelize, DataTypes){
         item_number:DataTypes.INTEGER,
         discount_cost:{type:DataTypes.INTEGER,defaultValue:0},
         total_cost:{type:DataTypes.INTEGER,defaultValue:0},
-        user_id:DataTypes.INTEGER.UNSIGNED,        
+        user_id:DataTypes.INTEGER.UNSIGNED,
+        delivery_date:DataTypes.DATE,
+        delivery_slot_id:DataTypes.INTEGER.UNSIGNED,
+        address:DataTypes.TEXT,
+        delivery_charge:{type:DataTypes.DOUBLE,defaultValue:0},
+              
         
     }, {
         timestamps: true,
