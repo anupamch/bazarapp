@@ -55,4 +55,9 @@ export default class OrderController extends Controller{
            console.log(err)
        })
     }
+
+    deleteOrder(req,res){
+       let id = req.params.order_id
+        
+    }
 }
