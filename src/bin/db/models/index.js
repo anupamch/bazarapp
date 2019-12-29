@@ -32,7 +32,7 @@ models.forEach(function(model) {
   m.OrderDetails.belongsTo(m.Product,{foreignKey:'product_id'})
   m.OrderDetails.belongsTo(m.Order,{foreignKey:'order_id'})
   m.OrderDetails.belongsTo(m.Product,{foreignKey:'product_id'})
-    
+  m.Order.hasMany(m.OrderDetails,{foreignKey:'order_id'})  
 })(module.exports);
 
 module.exports.db = db;

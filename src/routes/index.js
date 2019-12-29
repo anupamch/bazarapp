@@ -42,6 +42,8 @@ router.post('/registration',userOp.registration);
 router.get('/*',verifyToken);
 router.post('/*',verifyToken);
 router.get('/users',userOp.getUser);
+router.post('/change-address',userOp.changeAddress);
+
 router.get('/products',productOp.getProduct);
 router.get('/products-by-category/:cat_id',productOp.getProductByCategory);
 
@@ -60,7 +62,11 @@ router.get('/delete-category/:id',categoryOp.deleteCtegory)
 
 router.get('/get-orders',orderOp.getAllOrder)
 router.get('/get-order-details/:id',orderOp.getOrderDetails)
+router.post('/get-order-details',orderOp.getOrderDetails)
 router.post('/save-order',orderOp.saveOrder)
+router.post('/change-order-payment-status',orderOp.changePaymentStatus)
+router.post('/change-order-delivery-status',orderOp.changeDeliveryStatus)
+router.post('/user-order-list',orderOp.myOrders)
 
 router.get('/get-setting',settingOp.getAllSettings);
 router.post('/update-setting',settingOp.saveSettings);
