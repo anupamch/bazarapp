@@ -14,7 +14,7 @@ var models = [
      'OrderDetails',
      'Offer',
      'AdminSetting',
-     
+     'BazarSlip'
    
 ];
 
@@ -25,14 +25,45 @@ models.forEach(function(model) {
 
 (function(m) {
   
-  m.UserAuth.belongsTo(m.User,{foreignKey:'user_id'})
-  m.Product.belongsTo(m.ProductCategory,{foreignKey:'category_id'})
-  m.Order.belongsTo(m.User,{foreignKey:'user_id'})
-  m.Order.belongsTo(m.DeliverySlot,{foreignKey:'delivery_slot_id'})
-  m.OrderDetails.belongsTo(m.Product,{foreignKey:'product_id'})
-  m.OrderDetails.belongsTo(m.Order,{foreignKey:'order_id'})
-  m.OrderDetails.belongsTo(m.Product,{foreignKey:'product_id'})
-  m.Order.hasMany(m.OrderDetails,{foreignKey:'order_id'})  
+  m.UserAuth.belongsTo(m.User, {
+    foreignKey: 'user_id'
+  });
+  m.Product.belongsTo(m.ProductCategory, {
+    foreignKey: 'category_id'
+  });
+  m.Order.belongsTo(m.User, {
+    foreignKey: 'user_id'
+  });
+  m.Order.hasMany(m.OrderDetails, {
+    foreignKey: 'order_id'
+  });
+  m.Order.belongsTo(m.DeliverySlot, {
+    foreignKey: 'delivery_slot_id'
+  });
+  m.OrderDetails.belongsTo(m.Product, {
+    foreignKey: 'product_id'
+  });
+  m.OrderDetails.belongsTo(m.Order, {
+    foreignKey: 'order_id'
+  });
+  m.OrderDetails.belongsTo(m.Product, {
+    foreignKey: 'product_id'
+  });
+  m.OrderDetails.belongsTo(m.Order, {
+    foreignKey: 'order_id'
+  });
+  m.BazarSlip.belongsTo(m.User, {
+    foreignKey: 'user_id'
+  });
+  m.BazarSlip.belongsTo(m.DeliverySlot, {
+    foreignKey: 'delivery_slot_id'
+  });
+  m.User.hasMany(m.BazarSlip, {
+    foreignKey: 'user_id'
+  });
+  m.User.hasMany(m.Order, {
+    foreignKey: 'user_id'
+  });  
 })(module.exports);
 
 module.exports.db = db;

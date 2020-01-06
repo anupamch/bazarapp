@@ -5,7 +5,17 @@ var db = require('../connection.js');
 var DataTypes = require("sequelize"); // load models
 
 
-var models = ['User', 'UserAuth', 'Product', 'ProductCategory', 'DeliverySlot', 'Order', 'OrderDetails', 'Offer', 'AdminSetting'];
+var models = ['User', 
+              'UserAuth', 
+              'Product', 
+              'ProductCategory', 
+              'DeliverySlot', 
+              'Order', 
+              'OrderDetails', 
+              'Offer', 
+              'AdminSetting',
+              'BazarSlip'
+            ];
 models.forEach(function (model) {
   module.exports[model] = db.import("./" + model);
 });
@@ -32,6 +42,16 @@ models.forEach(function (model) {
   m.OrderDetails.belongsTo(m.Product, {
     foreignKey: 'product_id'
   });
+  m.BazarSlip.belongsTo(m.User, {
+    foreignKey: 'user_id'
+  });
+  m.User.hasMany(m.BazarSlip, {
+    foreignKey: 'user_id'
+  });
+  m.User.hasMany(m.Order, {
+    foreignKey: 'user_id'
+  });
+
 })(module.exports);
 
 module.exports.db = db;
